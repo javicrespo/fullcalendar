@@ -15,6 +15,7 @@ function Calendar(element, options, eventSources) {
 	t.changeView = changeView;
 	t.select = select;
 	t.unselect = unselect;
+	t.reloadBusinessHours = reloadBusinessHours;
 	t.prev = prev;
 	t.next = next;
 	t.prevYear = prevYear;
@@ -51,10 +52,12 @@ function Calendar(element, options, eventSources) {
 	var ignoreWindowResize = 0;
 	var date = new Date();
 	var events = [];
-	var annotations = t.options.annotations;
+	var businessHours = t.options.businessHours;
 	var _dragElement;
 	
-	
+	t.getBusinessHours = function(){
+		return businessHours;
+	};
 	
 	/* Main Rendering
 	-----------------------------------------------------------------------------*/
@@ -349,10 +352,30 @@ function Calendar(element, options, eventSources) {
 		markEventsDirty();
 		if (elementVisible()) {
 			currentView.clearEvents();
+			currentView.renderBusinessHours(businessHours);
 			currentView.renderEvents(events, modifiedEventID);
 			currentView.eventsDirty = false;
-			currentView.renderAnnotations(annotations);
 		}
+	}
+
+	function reloadBusinessHours(_businessHours){
+		businessHours = _businessHours;
+		rerenderEvents();
+	}
+
+	function setMinAndMax(businessHours){
+		var min = "24:00";
+		for (var i = 0; i <businessHours.length; i++) {
+			if(businessHours[i].start < min) min = businessHours[i].start;
+		};
+		if(min == "24:00") min ="00:00";
+		t.options.minTime = min;
+		
+		var max = "00:00";
+		for (var j = 0; j <businessHours.length; j++) {
+			if(businessHours[j].end > max) max = businessHours[j].end;
+		};
+		t.options.maxTime = max;
 	}
 	
 	

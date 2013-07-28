@@ -60,7 +60,7 @@ function AgendaView(element, calendar, viewName) {
 	t.reportDayClick = reportDayClick; // selection mousedown hack
 	t.dragStart = dragStart;
 	t.dragStop = dragStop;
-	t.renderAnnotations = renderAnnotations;
+	t.renderBusinessHours = renderBusinessHours;
 	
 	// imports
 	View.call(t, element, calendar, viewName);
@@ -165,6 +165,7 @@ function AgendaView(element, calendar, viewName) {
 			dis = 1;
 			dit = 0;
 		}
+
 		minMinute = parseTime(opt('minTime'));
 		maxMinute = parseTime(opt('maxTime'));
 		colFormat = opt('columnFormat');
@@ -555,50 +556,62 @@ function AgendaView(element, calendar, viewName) {
 		}
 	}
 	
-	/* Render annotations
+	/* Render businessHours
 	-----------------------------------------------------------------------------*/
-	function renderAnnotations(annotations) {
+	function renderBusinessHours(businessHours) {
 		var html = '';
-		for (var i=0; i < annotations.length; i++) {
-			var ann = annotations[i];
-			if (ann.start >= this.start && ann.end <= this.end) {
-				var top = timePosition(ann.start, ann.start);
-				var bottom = timePosition(ann.end, ann.end);
-				var height = bottom - top;
-				var dayIndex = dayDiff(ann.start, t.visStart);
+		var timeOff = getTimeOff(businessHours, this.start, this.end);
+		for (var i=0; i < timeOff.length; i++) {
+			var off = timeOff[i];
+			var top = timePosition(off.start, off.start);
+			var bottom = timePosition(off.end, off.end);
+			var height = bottom - top;
+			var dayIndex = dayDiff(off.start, t.visStart);
 				
-				var left = colContentLeft(dayIndex) - 2;
-				var right = colContentRight(dayIndex) + 3;
-				var width = right - left;
+			var left = colContentLeft(dayIndex) - 2;
+			var right = colContentRight(dayIndex) + 3;
+			var width = right - left;
 
-				var cls = '';
-				if (ann.cls) {
-					cls = ' ' + ann.cls;
-				}
-
-				var colors = '';
-				if (ann.color) {
-					colors = 'color:' + ann.color + ';';
-				}
-				if (ann.background) {
-					colors += 'background:' + ann.background + ';';
-				}
-
-				var body = ann.title || '';
-
-				html += '<div style="position: absolute; ' + 
-					'top: ' + top + 'px; ' + 
-					'left: ' + left + 'px; ' +
-					'width: ' + width + 'px; ' +
-					'height: ' + height + 'px;' + colors + '" ' + 
-					'class="fc-annotation fc-annotation-skin' + cls + '">' + 
-					body + 
-					'</div>';
-			}
+			html += '<div style="position: absolute; ' + 
+				'top: ' + top + 'px; ' + 
+				'left: ' + left + 'px; ' +
+				'width: ' + width + 'px; ' +
+				'height: ' + height + 'px;"' + 
+				'class="fc-businessHours fc-businessHours-skin">' + 
+				'</div>';
+			
 		}
 		annotationSegmentContainer[0].innerHTML = html;				
 	}
 	
+	function getTimeOff(businessHours, start, end){
+		var currentDate = cloneDate(start);
+		var limit = addDays(cloneDate(end), -1);
+		var timeOff = [];
+		while(currentDate <= limit){
+			var dayOfWeek = currentDate.getDay();
+			var bizHoursForDay = [];
+			for(var i=0;i<businessHours.length;i++){
+				if(businessHours[i].day === dayOfWeek) bizHoursForDay.push(businessHours[i]);
+			}
+			var endOfTheDay = addMinutes(addDays(cloneDate(currentDate), 1),-1);
+			var off = {start: cloneDate(currentDate), end: endOfTheDay};
+			for(var j=0;j<bizHoursForDay.length;j++){
+				var periodStart = clearTime(cloneDate(currentDate));
+				var periodEnd = clearTime(cloneDate(currentDate));
+				addMinutes(periodStart, parseTime(bizHoursForDay[j].end));
+				addMinutes(periodEnd, parseTime(bizHoursForDay[j].start));
+				off.end = periodEnd;
+				timeOff.push(off);
+				off = {start: periodStart, end:endOfTheDay};
+			}
+
+			timeOff.push(off);
+			currentDate = addDays(currentDate, 1);
+		}
+		return timeOff;
+	}
+
 	/* Coordinate Utilities
 	-----------------------------------------------------------------------------*/
 	

@@ -229,16 +229,16 @@ a.fc-event,
 /* Global Annotation Styles
 ------------------------------------------------------------------------*/
 	 
-.fc-annotation {
+.fc-businessHours {
 	border-style: solid;
 	border-width: 0;
 	font-size: .85em;
 	cursor: default;
 	}
 		
-.fc-annotation-skin {
+.fc-businessHours-skin {
 	border-color: #999;     /* default BORDER color */
-	background-color: #edb; /* default BACKGROUND color */
+	background-color: #eeeeff; /* default BACKGROUND color */
 	color: #777;            /* default TEXT color */
 	text-align: center;
 	opacity: 0.8;

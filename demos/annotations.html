@@ -26,6 +26,14 @@
 			lastHour: 18,
 			firstDay: 1,
 			editable: true,
+			 selectable: true,
+            selectHelper: true,
+            eventClick: function(){
+            	return;
+            },
+            select: function(startDate, endDate, allDay, jsEvent, view ){
+            	return;
+            },
 			events: [
 				{
 					title: 'All Day Event',
@@ -72,40 +80,34 @@
 					url: 'http://google.com/'
 				}
 			],
-			annotations: [
+				businessHours: [
 				{
-					start: new Date(y, m, d, 13, 0),
-					end: new Date(y, m, d, 15, 30),
-					title: 'My 1st annotation',
-					cls: 'open', 
-					color: '#777777', // optional
-					background: '#eeeeff' // optional
+					day: 2,
+					start:"09:00",
+					end:"13:00"
 				},
 				{
-					start: new Date(y, m, d+1, 15, 0),
-					end: new Date(y, m, d+1, 16, 45),
-					title: 'On vacations',
-					cls: 'vacation', 
-					color: '#777777',
-					background: '#eeeef0' // optional
-				},
-				{
-					start: new Date(y, m, d+1, 16, 0),
-					end: new Date(y, m, d+1, 18, 30),
-					title: 'Overlapping annotation',
-					cls: 'open', 
-					color: '#777777', // optional
-					background: '#eeeedd' // optional
-				},
-				{
-					// just minimal fields for annotation
-					start: new Date(y, m, d-1, 12, 0),
-					end: new Date(y, m, d-1, 14, 0)
-				}
-			]		
+					day: 2,
+					start:"15:00",
+					end:"19:00"
+				}],		
 		});
-		
+		$('p').click(function(){
+	
+	$('#calendar').fullCalendar('reloadBusinessHours', [
+				{
+					day: 5,
+					start:"09:00",
+					end:"13:00"
+				},
+				{
+					day: 6,
+					start:"15:00",
+					end:"19:00"
+				}]);
+});
 	});
+
 
 </script>
 <style type='text/css'>
@@ -126,5 +128,6 @@
 </head>
 <body>
 <div id='calendar'></div>
+<p id="change">Change</a>
 </body>
 </html>
