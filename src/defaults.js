@@ -72,7 +72,7 @@ var defaults = {
 	
 	dropAccept: '*',
 	businessHours: [],
-	handleWindowResize: true	
+	handleWindowResize: true
 };
 
 // right-to-left defaults
