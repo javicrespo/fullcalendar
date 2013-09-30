@@ -154,7 +154,7 @@ function AgendaView(element, calendar, viewName) {
 	function updateOptions() {
 
 		tm = opt('theme') ? 'ui' : 'fc';
-<<<<<<< HEAD
+
 		nwe = opt('weekends') ? 0 : 1;
 		firstDay = opt('firstDay');
 		if (rtl = opt('isRTL')) {
@@ -165,9 +165,6 @@ function AgendaView(element, calendar, viewName) {
 			dit = 0;
 		}
 
-=======
-		rtl = opt('isRTL')
->>>>>>> upstream/master
 		minMinute = parseTime(opt('minTime'));
 		maxMinute = parseTime(opt('maxTime'));
 		colFormat = opt('columnFormat');
@@ -253,7 +250,7 @@ function AgendaView(element, calendar, viewName) {
 
 		annotationSegmentContainer =
 			$("<div style='position:absolute;z-index:-1;top:0;left:0'/>")
-				.appendTo(slotContent);
+				.appendTo(slotContainer);
 
 		s =
 			"<table class='fc-agenda-slots' style='width:100%' cellspacing='0'>" +
@@ -664,9 +661,10 @@ function AgendaView(element, calendar, viewName) {
 		var timeOff = [];
 		while(currentDate <= limit){
 			var dayOfWeek = currentDate.getDay();
+			if(dayOfWeek == 6 && nwe == 1) break;
 			var bizHoursForDay = [];
 			for(var i=0;i<businessHours.length;i++){
-				if(businessHours[i].day === dayOfWeek) bizHoursForDay.push(businessHours[i]);
+				if(businessHours[i].dayOfWeek === dayOfWeek) bizHoursForDay.push(businessHours[i]);
 			}
 			var endOfTheDay = addMinutes(addDays(cloneDate(currentDate), 1),-1);
 			var off = {start: cloneDate(currentDate), end: endOfTheDay};

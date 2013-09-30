@@ -22,8 +22,9 @@
 				right: 'month,agendaWeek,agendaDay'
 			},			
 			slotMinutes: 15,
-			firstHour: 10,
-			lastHour: 18,
+			minTime:"10:00",
+			maxTime:"15:00",
+			weekends:false,
 			firstDay: 1,
 			editable: true,
 			 selectable: true,
@@ -82,12 +83,12 @@
 			],
 				businessHours: [
 				{
-					day: 2,
+					dayOfWeek: 2,
 					start:"09:00",
 					end:"13:00"
 				},
 				{
-					day: 2,
+					dayOfWeek: 2,
 					start:"15:00",
 					end:"19:00"
 				}],		
@@ -96,12 +97,12 @@
 	
 	$('#calendar').fullCalendar('reloadBusinessHours', [
 				{
-					day: 5,
+					dayOfWeek: 5,
 					start:"09:00",
 					end:"13:00"
 				},
 				{
-					day: 6,
+					dayOfWeek: 6,
 					start:"15:00",
 					end:"19:00"
 				}]);
