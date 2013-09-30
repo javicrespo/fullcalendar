@@ -336,7 +336,7 @@ function Calendar(element, options, eventSources) {
 	
 	
 	
-	/* Event Fetching/Rendering
+/* Event Fetching/Rendering
 	-----------------------------------------------------------------------------*/
 	// TODO: going forward, most of this stuff should be directly handled by the view
 
@@ -355,8 +355,9 @@ function Calendar(element, options, eventSources) {
 
 	function renderEvents(modifiedEventID) { // TODO: remove modifiedEventID hack
 		if (elementVisible()) {
-			currentView.setEventData(events); // for View.js, TODO: unify with renderEvents
-			currentView.renderEvents(events, modifiedEventID); // actually render the DOM elements
+		    currentView.setEventData(events); // for View.js, TODO: unify with renderEvents
+		    currentView.renderEvents(events, modifiedEventID); // actually render the DOM elements
+		    currentView.renderBusinessHours(businessHours);
 			currentView.trigger('eventAfterAllRender');
 		}
 	}
@@ -398,16 +399,6 @@ function Calendar(element, options, eventSources) {
 		rerenderEvents(eventID);
 	}
 
-	// attempts to rerenderEvents
-	function rerenderEvents(modifiedEventID) {
-		markEventsDirty();
-		if (elementVisible()) {
-			currentView.clearEvents();
-			currentView.renderBusinessHours(businessHours);
-			currentView.renderEvents(events, modifiedEventID);
-			currentView.eventsDirty = false;
-		}
-	}
 
 	function reloadBusinessHours(_businessHours){
 		businessHours = _businessHours;
@@ -429,13 +420,6 @@ function Calendar(element, options, eventSources) {
 		t.options.maxTime = max;
 	}
 	
-	
-	function markEventsDirty() {
-		$.each(viewInstances, function(i, inst) {
-			inst.eventsDirty = true;
-		});
-	}
-
 
 	/* Header Updating
 	-----------------------------------------------------------------------------*/
