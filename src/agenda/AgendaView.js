@@ -253,7 +253,7 @@ function AgendaView(element, calendar, viewName) {
 
 		annotationSegmentContainer =
 			$("<div style='position:absolute;z-index:-1;top:0;left:0'/>")
-				.appendTo(slotContainer);
+				.appendTo(slotContent);
 
 		s =
 			"<table class='fc-agenda-slots' style='width:100%' cellspacing='0'>" +
