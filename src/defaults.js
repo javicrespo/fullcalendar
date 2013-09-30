@@ -71,9 +71,8 @@ var defaults = {
 	unselectAuto: true,
 	
 	dropAccept: '*',
-
-	businessHours: []
-	
+	businessHours: [],
+	handleWindowResize: true	
 };
 
 // right-to-left defaults
