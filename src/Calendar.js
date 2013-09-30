@@ -434,7 +434,6 @@ function Calendar(element, options, eventSources) {
 		$.each(viewInstances, function(i, inst) {
 			inst.eventsDirty = true;
 		});
-	}
 
 
 	/* Header Updating
