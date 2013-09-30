@@ -664,10 +664,9 @@ function AgendaView(element, calendar, viewName) {
 		var timeOff = [];
 		while(currentDate <= limit){
 			var dayOfWeek = currentDate.getDay();
-			if(dayOfWeek == 6 && nwe == 1) break;
 			var bizHoursForDay = [];
 			for(var i=0;i<businessHours.length;i++){
-				if(businessHours[i].dayOfWeek === dayOfWeek) bizHoursForDay.push(businessHours[i]);
+				if(businessHours[i].day === dayOfWeek) bizHoursForDay.push(businessHours[i]);
 			}
 			var endOfTheDay = addMinutes(addDays(cloneDate(currentDate), 1),-1);
 			var off = {start: cloneDate(currentDate), end: endOfTheDay};

@@ -56,10 +56,6 @@ function Calendar(element, options, eventSources) {
 	t.getBusinessHours = function(){
 		return businessHours;
 	};
-
-	t.setBusinessHours = function(_businessHours){
-		businessHours = _businessHours;
-	};
 	
 	/* Main Rendering
 	-----------------------------------------------------------------------------*/
