@@ -232,7 +232,6 @@ function Calendar(element, options, eventSources) {
 			}
 			currentView.sizeDirty = false;
 			currentView.eventsDirty = false;
-			updateEvents(forceEventRender);
 			// TODO: updateAnnotations here!
 			elementOuterWidth = element.outerWidth();
 			
