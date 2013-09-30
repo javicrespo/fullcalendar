@@ -154,7 +154,7 @@ function AgendaView(element, calendar, viewName) {
 	function updateOptions() {
 
 		tm = opt('theme') ? 'ui' : 'fc';
-
+<<<<<<< HEAD
 		nwe = opt('weekends') ? 0 : 1;
 		firstDay = opt('firstDay');
 		if (rtl = opt('isRTL')) {
@@ -165,6 +165,9 @@ function AgendaView(element, calendar, viewName) {
 			dit = 0;
 		}
 
+=======
+		rtl = opt('isRTL')
+>>>>>>> upstream/master
 		minMinute = parseTime(opt('minTime'));
 		maxMinute = parseTime(opt('maxTime'));
 		colFormat = opt('columnFormat');
